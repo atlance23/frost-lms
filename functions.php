@@ -125,18 +125,16 @@ function frost_enqueue_tailwind() {
  * @since 1.0.11
  */
 
-function frost_lms_redirect() {
-	if (is_user_logged_in()) {
-		
-		// Get current user info.
-		$current_user = wp_get_current_user();
-
-		if (in_array('administrator', $current_user->roles)) {
-			return;
+function frost_lms_redirect( $redirect_to, $request, $user ) {
+	// Only redirect if user is logged in and $user is a WP_User object
+	if ( is_a( $user, 'WP_User' ) && $user->exists() ) {
+		if ( in_array( 'administrator', (array) $user->roles ) ) {
+			return $redirect_to;
 		} else {
-			wp_safe_redirect(get_template_directory_uri() . '/admin/frost-lms-admin.php');
+			return get_template_directory_uri() . '/admin/frost-lms-admin.php';
 		}
 	}
+	return $redirect_to;
 }
 
 add_filter('login_redirect', 'frost_lms_redirect');
