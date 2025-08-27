@@ -137,6 +137,6 @@ function frost_lms_redirect( $redirect_to, $request, $user ) {
 	return $redirect_to;
 }
 
-add_filter('login_redirect', 'frost_lms_redirect');
+add_filter('login_redirect', 'frost_lms_redirect', 10, 3);
 add_action( 'wp_enqueue_scripts', 'frost_enqueue_tailwind' );
 add_action( 'init', 'frost_register_block_pattern_categories' );
