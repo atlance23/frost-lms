@@ -109,4 +109,36 @@ function frost_register_block_pattern_categories() {
 
 }
 
+/**
+ * Enqueue Tailwinds CSS.
+ * 
+ * @since 1.0.11
+ */
+
+function frost_enqueue_tailwind() {
+	wp_enqueue_script( 'frost-tailwind', 'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4', array(), wp_get_theme()->get( 'Version' ) );
+}
+
+/**
+ * Redirect to Frost LMS settings page upon theme activation.
+ * 
+ * @since 1.0.11
+ */
+
+function frost_lms_redirect() {
+	if (is_user_logged_in()) {
+		
+		// Get current user info.
+		$current_user = wp_get_current_user();
+
+		if (in_array('administrator', $current_user->roles)) {
+			return;
+		} else {
+			wp_safe_redirect(get_template_directory_uri() . '/admin/frost-lms-admin.php');
+		}
+	}
+}
+
+add_filter('login_redirect', 'frost_lms_redirect');
+add_action( 'wp_enqueue_scripts', 'frost_enqueue_tailwind' );
 add_action( 'init', 'frost_register_block_pattern_categories' );
