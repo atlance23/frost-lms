@@ -1,9 +1,10 @@
 <?php
 /**
- * Title: Frost LMS Admin
- * Slug: frost-lms-admin
- * Inserter: no
+ * Template Name: Frost LMS Admin
+ * Description: Custom admin page for Frost LMS.
  */
+
+    get_header();
 ?>
 <section class="relative">
     <aside class="w-screen md:w-48 h-screen p-4 bg-blue-100 absolute inset-0">
@@ -22,3 +23,6 @@
 
     </div>
 </section>
+<?php
+    get_footer();
+?>
