@@ -116,7 +116,7 @@ function frost_register_block_pattern_categories() {
  */
 
 function frost_enqueue_tailwind() {
-	wp_enqueue_script( 'frost-tailwind', 'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4', array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'frost-tailwind', "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4", array(), wp_get_theme()->get( 'Version' ) );
 }
 
 /**
