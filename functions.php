@@ -131,12 +131,57 @@ function frost_lms_redirect( $redirect_to, $request, $user ) {
 		if ( in_array( 'administrator', (array) $user->roles ) ) {
 			return $redirect_to;
 		} else {
-			return get_template_directory_uri() . '/admin/frost-lms-admin.php';
+			return get_site_url() . '/frost-lms-admin';
 		}
 	}
+
 	return $redirect_to;
 }
 
+/**
+ * Add custom admin page for Frost LMS.
+ * 
+ * @since 1.0.11
+ */
+
+// Custom rewrite rule for frontend admin page
+function frost_lms_admin_rewrite() {
+	add_rewrite_rule('^frost-lms-admin/?$', 'index.php?frost_lms_admin=1', 'top');
+}
+
+/**
+ * Register query var.
+ * 
+ * @since 1.0.11
+ */
+
+// Register query var
+function frost_lms_admin_query_vars($vars) {
+	$vars[] = 'frost_lms_admin';
+	return $vars;
+}
+
+/**
+ * Template loader for custom admin page.
+ * 
+ * @since 1.0.11
+ */
+// Template loader for custom admin page
+function frost_lms_admin_template($template) {
+	if (get_query_var('frost_lms_admin')) {
+		$admin_template = get_template_directory() . '/admin/frost-lms-admin.php';
+		if (file_exists($admin_template)) {
+			return $admin_template;
+		}
+	}
+	return $template;
+}
+
+// Hook into WordPress
+
+add_action('init', 'frost_lms_admin_rewrite');
+add_filter('query_vars', 'frost_lms_admin_query_vars');
+add_filter('template_include', 'frost_lms_admin_template');
 add_filter('login_redirect', 'frost_lms_redirect', 10, 3);
 add_action( 'wp_enqueue_scripts', 'frost_enqueue_tailwind' );
 add_action( 'init', 'frost_register_block_pattern_categories' );
