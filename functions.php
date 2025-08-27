@@ -169,7 +169,7 @@ function frost_lms_admin_query_vars($vars) {
 // Template loader for custom admin page
 function frost_lms_admin_template($template) {
 	if (get_query_var('frost_lms_admin')) {
-		$admin_template = get_template_directory() . '/admin/page-frost-lms-admin.php';
+		$admin_template = get_template_directory() . '/patterns/page-admin.php';
 		if (file_exists($admin_template)) {
 			return $admin_template;
 		}
